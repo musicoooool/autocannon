@@ -55,6 +55,7 @@
     "hdr-histogram-percentiles-obj": "^2.0.0",
     "http-parser-js": "^0.5.0",
     "hyperid": "^2.0.2",
+    "jsonwebtoken": "^8.5.1",
     "manage-path": "^2.0.0",
     "minimist": "^1.2.0",
     "on-net-listen": "^1.1.1",
