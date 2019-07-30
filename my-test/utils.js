@@ -19,13 +19,13 @@ const sign = (payload) => jwt.sign(payload, SECRET)
 
 module.exports = sign
 
-console.log(sign({
-  jti: 'bf27ba153f1b4ff4921888c4f4f4342c',
-  sub: 'wap',
-  iat: 1564129528,
-  exp: 1564734328,
-  params: {
-    memberName: '张三',
-    memberId: 'M001'
-  }
-}))
+// console.log(sign({
+//   jti: 'bf27ba153f1b4ff4921888c4f4f4342c',
+//   sub: 'wap',
+//   iat: 1564129528,
+//   exp: 1564734328,
+//   params: {
+//     memberName: '张三',
+//     memberId: 'M001'
+//   }
+// }))
