@@ -1,10 +1,11 @@
 // const autocannon = require('autocannon')
-const run = require('../../lib/run')
-const { HOST, PORT } = require('../key')
-const jwt = require('../utils')
+const run = require('../../../lib/run')
+const { HOST, PORT } = require('../../key')
+const jwt = require('../../utils')
 
 const url = `http://${HOST}:${PORT}/`
-const path = '/api/test/no-auth'
+// const url = "http://172.16.116.90/"
+const path = '/api/member/test/auth'
 
 const replacement = {
   autoJit: () => {
@@ -20,10 +21,10 @@ const replacement = {
       sub: 'wap',
       iat: 1564129528,
       exp: 1564734328,
-      params: JSON.stringify({
+      params: {
         memberName: `user_${id}`,
         memberId: `${id}`
-      })
+      }
     })
   },
   autoId: () => {
@@ -50,9 +51,9 @@ const replacement = {
 
 run({
   url: url,
-  connections: 20,
+  connections: 50,
   duration: 60,
-  pipelining: 500,
+  pipelining: 50,
   replacement: replacement,
   requests: [
     {

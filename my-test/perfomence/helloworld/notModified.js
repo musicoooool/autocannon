@@ -1,17 +1,34 @@
 // const autocannon = require('autocannon')
-const run = require('../lib/run')
+const run = require('../../../lib/run')
+const { HOST, PORT } = require('../../key')
+const jwt = require('../../utils')
 
-const url = 'http://localhost:3000/'
-const path = '/api/specialtyProduct/doSubscribe?batchId=1&memberName=user_'
+const url = `http://${HOST}:${PORT}/`
+// const url = "http://172.16.116.90/"
+const path = '/test/cache/no-auth'
+
 const replacement = {
-  autoPath: (id) => {
-    return `${path}${id}`
+  autoJit: () => {
+    let jit = ''
+    for (let i = 0; i < 32; i++) {
+      jit += '' + '0123456789abcdef'.substr(Math.floor(Math.random() * 16), 1)
+    }
+    return jit
+  },
+  autoJWT: (id) => {
+    return jwt({
+      jti: replacement.autoJit(),
+      sub: 'wap',
+      iat: 1564129528,
+      exp: 1564734328,
+      params: {
+        memberName: `user_${id}`,
+        memberId: `${id}`
+      }
+    })
   },
   autoId: () => {
     return Math.floor(Math.random() * 2000000).toString()
-  },
-  autoHeader: (id) => {
-    return `{"header":"header"}.{"payload":"${id}"}.sign`
   },
   content: (ret) => {
     const id = replacement.autoId()
@@ -19,8 +36,7 @@ const replacement = {
 
     const content = {
       id: id,
-      path: replacement.autoPath(id),
-      Authorization: replacement.autoHeader(id)
+      Authorization: replacement.autoJWT(id)
     }
     Object.keys(content).forEach(key => {
       const regexp = new RegExp(`\\[<${key}>\\]`, 'g')
@@ -35,25 +51,24 @@ const replacement = {
 
 run({
   url: url,
-  connections: 15,
-  duration: 30,
-  pipelining: 800,
+  connections: 50,
+  duration: 60,
+  pipelining: 50,
   replacement: replacement,
   requests: [
     {
-      method: 'PUT',
-      path: '[<path>]',
+      method: 'GET',
+      path: path,
       headers: {
         'Content-type': 'application/json; charset=utf-8',
-        Authorization: '[<Authorization>]'
+        'If-Modified-Since': '[<modifiedSince>]'
       },
       body: JSON.stringify({
         name: 'New User',
         email: 'new-[<id>]@user.com' // [<id>] will be replaced with generated HyperID at run time
       })
     }
-  ],
-  idReplacement: false
+  ]
 }, finishedBench)
 
 function finishedBench (err, res) {

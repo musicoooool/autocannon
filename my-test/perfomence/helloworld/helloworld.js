@@ -1,6 +1,6 @@
 // const autocannon = require('autocannon')
-const run = require('../../lib/run')
-const { HOST, PORT } = require('../key')
+const run = require('../../../lib/run')
+const { HOST, PORT } = require('../../key')
 
 const url = `http://${HOST}:${PORT}/`
 const path = '/api/test/no-auth'
