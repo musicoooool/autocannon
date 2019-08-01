@@ -1,6 +1,6 @@
 var axios = require('axios')
 var { HOST, PORT } = require('../key')
-var CAPTCHA_KEY = require('./key').CAPTCHA_KEY
+var CAPTCHA_KEY = require('../key').CAPTCHA_KEY
 var md5 = require('blueimp-md5')
 
 const url = `http://${HOST}:${PORT}/`
