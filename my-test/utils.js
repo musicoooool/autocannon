@@ -1,7 +1,5 @@
 var SECRET = require('./key').SECRET
-var CAPTCHA_KEY = require('./key').CAPTCHA_KEY
 var jwt = require('jsonwebtoken')
-var crypto = require('crypto')
 
 // const Base64 = {
 //   encode (str) {
@@ -18,11 +16,9 @@ var crypto = require('crypto')
 // }
 
 const sign = (payload) => jwt.sign(payload, SECRET)
-const md5 = (content) => crypto.createHash('MD5').update(content + CAPTCHA_KEY).digest().toString('hex')
 
-module.exports = { sign, md5 }
+module.exports = sign
 
-// console.log(md5('123CAPTCHA_BOX6'))
 // console.log(sign({
 //   jti: 'bf27ba153f1b4ff4921888c4f4f4342c',
 //   sub: 'wap',

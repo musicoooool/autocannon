@@ -1,13 +1,14 @@
 var axios = require('axios')
 var { HOST, PORT } = require('../key')
-var md5 = require('../utils').md5
+var CAPTCHA_KEY = require('./key').CAPTCHA_KEY
+var md5 = require('blueimp-md5')
 
 const url = `http://${HOST}:${PORT}/`
 // const url = 'http://shop.vlink.ltd/'
 const getCaptchaUrl = `${url}api/captcha/makecaptchakey?_=`
 // const submitCaptchaUrl = `${url}api/login-box`
 const captchaVal = '503'
-const captchaKey = md5(captchaVal)
+const captchaKey = md5(`${captchaVal}${CAPTCHA_KEY}`)
 
 console.log('target key is ' + captchaKey)
 
