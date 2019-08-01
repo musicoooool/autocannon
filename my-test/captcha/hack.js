@@ -38,7 +38,7 @@ const testLogin = async () => {
       console.log('got it cost ' + success + ' times.')
       return
     } else {
-      setTimeout(testLogin, 50)
+      setTimeout(testLogin, 10)
     }
   } catch (error) {
     console.log(error)
