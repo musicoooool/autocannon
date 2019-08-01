@@ -1,7 +1,7 @@
 // const autocannon = require('autocannon')
 const run = require('../../../lib/run')
 const { HOST, PORT } = require('../../key')
-const jwt = require('../../utils')
+const jwt = require('../../utils').sign
 
 const url = `http://${HOST}:${PORT}/`
 // const url = "http://172.16.116.90/"
